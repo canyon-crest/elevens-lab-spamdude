@@ -56,10 +56,7 @@ public class ElevensBoard9 extends Board9 {
 	public boolean isLegal(List<Integer> selectedCards) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
 		List<Integer> TCARDS = new ArrayList<>();
-		for (int i = 0; i < this.size(); i++) {
-			TCARDS.add(this.cardAt(i).pointValue());
-		}
-		return (this.containsPairSum11(TCARDS) && selectedCards.size() == 2) || (this.containsJQK(TCARDS) && selectedCards.size() == 3);
+		return (this.containsPairSum11(selectedCards) && selectedCards.size() == 2) || (this.containsJQK(selectedCards) && selectedCards.size() == 3);
 	}
 
 	/**
@@ -73,11 +70,7 @@ public class ElevensBoard9 extends Board9 {
 	@Override
 	public boolean anotherPlayIsPossible() {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
-		List<Integer> TCARDS = new ArrayList<>();
-		for (int i = 0; i < this.size(); i++) {
-			TCARDS.add(this.cardAt(i).pointValue());
-		}
-		return this.containsPairSum11(TCARDS) || this.containsJQK(TCARDS);
+		return this.containsPairSum11(this.cardIndexes()) || this.containsJQK(this.cardIndexes());
 	}
 
 	/**
@@ -89,10 +82,16 @@ public class ElevensBoard9 extends Board9 {
 	 *              contain an 11-pair; false otherwise.
 	 */
 	private boolean containsPairSum11(List<Integer> selectedCards) {
+		List<Integer> TCARDS = new ArrayList<>();
+		for (int i: selectedCards) {
+			TCARDS.add(this.cardAt(i).pointValue());
+		}
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
-		for (int i = 0; i < selectedCards.size() - 1; i++) {
-			for (int j = i; j < selectedCards.size(); j++) {
-				if (selectedCards.get(i) + selectedCards.get(j) == 11) {return true;}
+		for (int i = 0; i < TCARDS.size() - 1; i++) {
+			for (int j = i; j < TCARDS.size(); j++) {
+				if (TCARDS.get(i) + TCARDS.get(j) == 11) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -110,9 +109,9 @@ public class ElevensBoard9 extends Board9 {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
 		boolean J = false, Q = false, K = false;
 		for (int i: selectedCards) {
-			if (i == 11) {J = true;}
-			if (i == 12) {Q = true;}
-			if (i == 13) {K = true;}
+			if (this.cardAt(i).rank().equals("jack")) {J = true;}
+			if (this.cardAt(i).rank().equals("queen")) {Q = true;}
+			if (this.cardAt(i).rank().equals("king")) {K = true;}
 		}
 		return (J && Q && K);
 	}
