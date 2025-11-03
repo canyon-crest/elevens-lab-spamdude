@@ -1,5 +1,8 @@
 package Activity4;
 import java.util.List;
+
+import Activity2.Card2;
+
 import java.util.ArrayList;
 
 /**
@@ -64,7 +67,19 @@ public class Deck4 {
 	 */
 	public void shuffle() {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 4 *** */
-		this.size = 0; // remove me
+		// remove me
+		int[] t = new int[this.cards.size()];
+		for (int i = 0; i < this.cards.size(); i++) {
+			t[i] = i;
+		}
+		Activity3.Shuffler3.selectionShuffle(t);
+		ArrayList<Card4> hastur = new ArrayList<>();
+		for (int i = 0; i < this.cards.size(); i++) {
+			hastur.add(this.cards.get(t[i]));
+		}
+		for (int i = 0; i < this.cards.size(); i++) {
+			this.cards.set(i, hastur.get(i));
+		}
 	}
 
 	/**

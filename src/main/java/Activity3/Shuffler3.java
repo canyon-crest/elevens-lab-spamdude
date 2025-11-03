@@ -1,6 +1,6 @@
-import java.util.*;
-
 package Activity3;
+
+import java.util.ArrayList;
 /**
  * This class provides a convenient way to test shuffling methods.
  */
@@ -56,11 +56,14 @@ public class Shuffler3 {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 3 *** */
 		int len = values.length;
 		int[] res = new int[len];
-		for (int i = 0; i < len/2; i++) {
-			res[i] = values[i*2];
-			res[len/2+i] = values[i*2+1];
+		for (int i: res) {
+			System.out.print(" "+i);
 		}
-		values = res;
+		for (int i = 0; i < len/2; i++) {
+			res[i*2] = values[i];
+			res[i*2+1] = values[len/2+i];
+		}
+        System.arraycopy(res, 0, values, 0, len);
 	}
 
 	/**
@@ -76,13 +79,15 @@ public class Shuffler3 {
 	 */
 	public static void selectionShuffle(int[] values) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 3 *** */
-		ArrayList<Integer> values2 = new ArrayList<>(Arrays.asList(values));
+		ArrayList<Integer> values2 = new ArrayList<>();
+		for (int v: values) {values2.add(v);}
 		int len = values.length;
 		int[] res = new int[len];
-		while(values2.size() > 0) {
+		while(!values2.isEmpty()) {
 			len--;
 			res[len] = values2.remove((int)(Math.random()*values2.size()));
 		}
-		values = res;
+		
+        System.arraycopy(res, 0, values, 0, values.length);
 	}
 }

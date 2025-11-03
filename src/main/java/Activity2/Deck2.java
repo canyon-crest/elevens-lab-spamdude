@@ -1,6 +1,6 @@
 package Activity2;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Deck class represents a shuffled deck of cards.
@@ -32,11 +32,14 @@ public class Deck2 {
 	 */
 	public Deck2(String[] ranks, String[] suits, int[] values) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 2 *** */
+		this.cards = new ArrayList<>();
+		int i;
 		for (String $: suits) {
+			i = 0;
 			for (String $$: ranks) {
-				for (int $$$: values) {
-					this.cards.add(new Card2($$,$,$$$));
-				}
+				Card2 card = new Card2($$,$,values[i]);
+				this.cards.add(card);
+				i++;
 			}
 		}
 		this.size = this.cards.size();
@@ -67,9 +70,21 @@ public class Deck2 {
 	 */
 	public void shuffle() {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 4 *** */
-		this.size = this.cards.size();
-		for (int i = 0; i < this.size(); i++) {
-			this.cards.add((int)(Math.random()*(this.size()-1)),this.cards.remove(0));
+		//this.size = this.cards.size();
+		//for (int i = 0; i < this.size(); i++) {
+		//	this.cards.add((int)(Math.random()*(this.size()-1)),this.cards.remove(0));
+		//}
+		int[] t = new int[this.cards.size()];
+		for (int i = 0; i < this.cards.size(); i++) {
+			t[i] = i;
+		}
+		Activity3.Shuffler3.selectionShuffle(t);
+		ArrayList<Card2> hastur = new ArrayList<>();
+		for (int i = 0; i < this.cards.size(); i++) {
+			hastur.add(this.cards.get(t[i]));
+		}
+		for (int i = 0; i < this.cards.size(); i++) {
+			this.cards.set(i, hastur.get(i));
 		}
 	}
 
@@ -81,7 +96,7 @@ public class Deck2 {
 	public Card2 deal() {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 2 *** */
 		this.size--;
-		return this.size<0?null:this.cards[this.size];
+		return this.size<0?null:this.cards.get(this.size);
 	}
 
 	/**
